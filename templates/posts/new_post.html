@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}New Post{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-10 bg-white shadow rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">Create New Post</h1>
+
+    {% if success %}
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+            {{ success }}
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Message</label>
+            {% if success %}
+                <textarea name="message" rows="4" class="w-full border rounded p-2" disabled></textarea>
+            {% else %}
+                <textarea name="message" rows="4" class="w-full border rounded p-2">{{ request.POST.message }}</textarea>
+            {% endif %}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Image URL (optional)</label>
+            {% if success %}
+                <input type="url" name="image_url" class="w-full border rounded p-2" disabled>
+            {% else %}
+                <input type="url" name="image_url" value="{{ request.POST.image_url }}" class="w-full border rounded p-2">
+            {% endif %}
+        </div>
+
+        {% if not success %}
+            <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                Post to Facebook
+            </button>
+            <a href="{% url 'dashboard' %}" class="ml-4 text-gray-600 hover:underline">Cancel</a>
+        {% else %}
+            <a href="{% url 'create_post' %}" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                Create Another Post
+            </a>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

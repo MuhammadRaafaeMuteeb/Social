@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Social Posts{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Welcome, {{ user.username }} 👋</h1>
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-sm font-medium text-gray-500">Total Scheduled Posts</h2>
+            <p class="text-2xl font-bold text-indigo-600 mt-2">{{ total_scheduled }}</p>
+        </div>
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-sm font-medium text-gray-500">Total Published</h2>
+            <p class="text-2xl font-bold text-green-600 mt-2">{{ total_published }}</p>
+        </div>
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-sm font-medium text-gray-500">Connected Accounts</h2>
+            <p class="text-2xl font-bold text-blue-600 mt-2">{{ total_accounts }}</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="flex flex-wrap gap-4 mb-8">
+        <!-- Link to post_to_facebook -->
+        <a href="{% url 'create_post' %}" 
+           class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">
+           + New Post
+        </a>
+
+        <!-- Link to connect_facebook -->
+        <a href="{% url 'facebook_connect' %}" 
+           class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg shadow hover:bg-gray-300">
+           Manage Accounts
+        </a>
+    </div>
+
+    <!-- Scheduled Posts Table -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+        <table class="min-w-full">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Post</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Platform</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Scheduled For</th>
+                    <th class="px-6 py-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in scheduled_posts %}
+                <tr class="border-t">
+                    <td class="px-6 py-4">{{ post.content|truncatechars:50 }}</td>
+                    <td class="px-6 py-4">{{ post.platform }}</td>
+                    <td class="px-6 py-4">{{ post.scheduled_time|date:"M d, Y H:i" }}</td>
+                    <td class="px-6 py-4 text-right">
+                        <!-- Link to edit_post only if it exists -->
+                        {% if post.id %}
+                            <a href="{% url 'post_to_facebook' %}" class="text-indigo-600 hover:underline">Edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">No scheduled posts yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
