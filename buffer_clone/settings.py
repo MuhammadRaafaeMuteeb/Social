@@ -63,9 +63,11 @@ WSGI_APPLICATION = "buffer_clone.wsgi.application"
 
 # Database
 DATABASES = {
-    'default': {}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-DATABASES['default'] = dj_database_url.config(default=os.getenv("DATABASE_URL"))
 
 # Whitenoise settings
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
