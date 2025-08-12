@@ -62,6 +62,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "buffer_clone.wsgi.application"
 
 # Database
+DATABASES = {
+    'default': {}
+}
 DATABASES['default'] = dj_database_url.config(default=os.getenv("DATABASE_URL"))
 
 # Whitenoise settings
