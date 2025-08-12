@@ -131,7 +131,7 @@ META_APP_ID = "757636776676066"
 META_APP_SECRET = "1feb2af766be229e4c8efcec591a7871"
 
 # Redirect URIs
-FACEBOOK_REDIRECT_URI = "http://localhost:8000/callback/facebook/"
+FACEBOOK_REDIRECT_URI = "https://social-slb1.onrender.com/callback/facebook/"
 INSTAGRAM_REDIRECT_URI = "http://localhost:8000/callback/instagram/"
 
 # LinkedIn
